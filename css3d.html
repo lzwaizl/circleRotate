@@ -1,0 +1,101 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <style>
+    #site-logo {
+        margin-right: 20px;
+    }
+    #site-logo a img {
+        padding: 0;
+        border-radius: 38px;
+        margin-right: 20px;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div id="site-logo">
+        <a href="http://big-room.org/" title="Bigroom">
+            <img src="http://big-room.org/wp-content/uploads/2014/07/1.png" alt="Bigroom" style="-webkit-transform: rotateY(90deg);">
+        </a>
+    </div>
+
+    <script type="text/javascript">
+    (function() {
+        var data = [
+            "2014/07/1.png",
+            "2014/07/2.png",
+            "2014/07/3.png",
+            "2014/07/4.png",
+            "2014/07/5.png",
+            "2014/07/sun.png",
+            "2014/07/zjh.png",
+            "2014/07/yzz.png",
+            "2014/07/gm.png",
+            "2014/07/xl.png",
+            "2014/07/ceo.png",
+            "2014/07/hhl.png",
+            "2014/07/fhy.png",
+            "2014/07/rds.png",
+            "2014/07/xfl.png",
+            "2014/07/zds.png",
+            "2014/07/xjw.png",
+            "2014/07/listen.png"
+        ];
+        var len = data.length;
+
+        var prefix = "http://big-room.org/wp-content/uploads/";
+        var p = /(\d+)/;
+        var flag_plus = true;
+        var index = 1;
+
+        var _preImg = function(data) {
+            var i = 0;
+            while (data[i]) {
+                var img = new Image();
+                img.src = prefix + data[i];
+                i++;
+            }
+        }
+
+        var _RotateY = function(dom, value) {
+            if (dom.style.WebkitTransform !== undefined) {
+                return value ? (dom.style.WebkitTransform = value) : dom.style.WebkitTransform;
+            } else if (dom.style.MozTransform !== undefined) {
+                return value ? (dom.style.MozTransform = value) : dom.style.MozTransform;;
+            } else if (dom.style.transform !== undefined) {
+                return value ? (dom.style.transform = value) : dom.style.transform;
+            }
+        };
+
+        var logo = document.getElementById("site-logo").getElementsByTagName("img")[0];
+        var start_src = logo.src;
+        _RotateY(logo, "rotateY(0deg)");
+        var cur = _RotateY(logo).match(p)[0];
+
+        var _changeIndex = function(flag) {
+            flag_plus = flag;
+            logo.src = prefix + (index < len ? data[index++] : start_src);
+            if (index == len - 1) index = 0;
+        };
+        _preImg(data);
+
+        setTimeout(function() {
+            cur == 90 && _changeIndex(false);
+            cur == -90 && _changeIndex(true);
+            flag_plus ? cur++ : cur--;
+            _RotateY(logo, "rotateY(" + cur + "deg)");
+            setTimeout(arguments.callee, 10);
+        }, 10);
+    })()
+    </script>
+
+</body>
+
+</html>
